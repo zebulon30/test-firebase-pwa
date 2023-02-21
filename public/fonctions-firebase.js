@@ -2,7 +2,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, fetchSignInMethodsForEmail } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
-import { } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -19,10 +19,14 @@ const firebaseConfig = {
   };
 
 // Initialise Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 // Obtient l'instance Auth
-var auth = getAuth(firebaseApp);
+var auth = getAuth(app);
+
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(app);
+
 
 // ------------------------------------------------------------------------------------------
 
@@ -98,4 +102,33 @@ document.querySelector(".password").addEventListener("click", function(e){
     } else {
         a.setAttribute('type', 'password')
     }
+}, false)
+
+
+document.querySelector(".peuplement_villes").addEventListener("click", async function(e){
+    e.preventDefault()
+
+    // Défini un pointeur de collection
+    const citiesRef = collection(db, "villes");
+
+    await setDoc(doc(citiesRef, "SF"), {
+        name: "San Francisco", state: "CA", country: "USA",
+        capital: false, population: 860000,
+        regions: ["west_coast", "norcal"] });
+    await setDoc(doc(citiesRef, "LA"), {
+        name: "Los Angeles", state: "CA", country: "USA",
+        capital: false, population: 3900000,
+        regions: ["west_coast", "socal"] });
+    await setDoc(doc(citiesRef, "DC"), {
+        name: "Washington, D.C.", state: null, country: "USA",
+        capital: true, population: 680000,
+        regions: ["east_coast"] });
+    await setDoc(doc(citiesRef, "TOK"), {
+        name: "Tokyo", state: null, country: "Japan",
+        capital: true, population: 9000000,
+        regions: ["kanto", "honshu"] });
+    await setDoc(doc(citiesRef, "BJ"), {
+        name: "Beijing", state: null, country: "China",
+        capital: true, population: 21500000,
+        regions: ["jingjinji", "hebei"] });
 }, false)
