@@ -1,0 +1,17 @@
+{
+  "lang": "fr-FR",
+  "name": "Firebase & PWA",
+  "short_name": "Test Firebase PWA",
+  "description": "Une application de test du Progressive Web Apps (PWA) et de l'implémentation de firebase",
+  "start_url": "/",
+  "background_color": "#2f3d58",
+  "theme_color": "#2f3d58",
+  "orientation": "any",
+  "display": "standalone",
+  "icons": [
+      {
+        "src": "/cle.jpg",
+        "sizes": "512x512"
+      }
+    ]
+}
